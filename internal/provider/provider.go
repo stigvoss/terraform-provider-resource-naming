@@ -16,8 +16,6 @@ import (
 
 var _ provider.Provider = &ResourceNamingProvider{}
 var _ provider.ProviderWithFunctions = &ResourceNamingProvider{}
-var _ provider.ProviderWithEphemeralResources = &ResourceNamingProvider{}
-var _ provider.ProviderWithActions = &ResourceNamingProvider{}
 
 type ResourceNamingProvider struct {
 	version         string
@@ -61,12 +59,7 @@ func (p *ResourceNamingProvider) Configure(ctx context.Context, req provider.Con
 		return
 	}
 
-	if data.NamingFormat.IsNull() {
-
-	}
-
-	p.namingFormat = data.NamingFormat
-	p.globalVariables = data.GlobalVariables
+	p.namingFormat = data.NamingFormat.ValueString()
 }
 
 func (p *ResourceNamingProvider) Resources(ctx context.Context) []func() resource.Resource {
